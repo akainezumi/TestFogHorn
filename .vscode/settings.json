@@ -1,0 +1,9 @@
+{
+    "prettier.configPath": ".vscode/prettierrc.json",
+    "[ts, json, sass, css, js]": {
+        "editor.defaultFormatter": "remimarsal.prettier-now"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
