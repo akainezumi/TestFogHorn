@@ -1,9 +1,33 @@
 {
-    "prettier.configPath": ".vscode/prettierrc.json",
-    "[ts, json, sass, css, js]": {
-        "editor.defaultFormatter": "remimarsal.prettier-now"
-    },
+    // Default formatter for workspace
+    "editor.defaultFormatter": "remimarsal.prettier-now",
+    // Overrides
     "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    // Configuration file for beautify
+    "beautify.config": ".vscode/beautify.json",
+    // Prettier Now Configuration
+    "prettier.arrowParens": true,
+    "prettier.alignObjectProperties": false,
+    "prettier.arrayExpand": true,
+    "prettier.bracesSpacing": true,
+    "prettier.bracketSpacing": false,
+    "prettier.breakBeforeElse": false,
+    "prettier.breakProperty": false,
+    "prettier.flattenTernaries": false,
+    "prettier.noSpaceEmptyFn": false,
+    "prettier.semi": true,
+    "prettier.singleQuote": true,
+    "prettier.spaceBeforeFunctionParen": false,
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "es5",
+    "prettier.useTabs": true,
+    "prettier.printWidth": 80,
 }

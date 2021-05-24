@@ -1,0 +1,23 @@
+{
+	"indent_comments": true,
+	"indent_inner_html": true,
+	"indent_scripts": "normal",
+	"indent_size": 2,
+	"indent_style": "space",
+	"max_preserve_newlines": 1,
+	"force_indentation": true,
+	"newline_before_tags": [
+		"head",
+		"body",
+		"/html",
+		"div",
+		"/div"
+	],
+	"newline_between_rules": true,
+	"preserve_newlines": true,
+	"quotes": "double",
+	"unformatted": [],
+	"wrap_attributes": "force-aligned",
+	"wrap_attributes_indent_size": 0,
+	"wrap_line_length": 80
+}

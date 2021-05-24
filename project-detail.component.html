@@ -1,0 +1,407 @@
+<div *ngIf="project">
+  <div class="page-header">
+    <div class="page-header-start">
+      <button mat-icon-button="mat-icon-button"
+              routerLink="/home/projects"
+              class="text-2xl">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <i class="fas fa-file-pdf project-type pdf-back"></i>
+      <div class="min-w-0">
+        <h1 class='mat-display-1'>
+          <span class='project-title'>{{project.title}}</span>
+          <button mat-icon-button="mat-icon-button">
+            <i class="far fa-pencil"></i>
+          </button>
+          <button mat-icon-button="mat-icon-button">
+            <i class="far fa-copy"></i>
+          </button>
+          <button mat-icon-button="mat-icon-button">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </h1>
+        <div class="last-update">
+          <span translate="translate">common.updated</span>
+          -
+          {{project.updated | localeDate}}
+        </div>
+      </div>
+    </div>
+    <mat-card class="publish-toggle-card"
+              [ngClass]="{'accent-back': project.publish}">
+      <mat-slide-toggle [(ngModel)]="project.publish"
+                        color="primary">
+        <span *ngIf="!project.publish"
+              translate="translate">project.publish</span>
+        <span *ngIf="project.publish"
+              translate="translate">project.published</span>
+      </mat-slide-toggle>
+    </mat-card>
+  </div>
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex"
+                 (selectedTabChange)="onResize()">
+    <mat-tab>
+      <ng-template mat-tab-label="mat-tab-label">
+        <i class="fas fa-tachometer-alt"></i>
+        <span translate="translate">project.detail.tabs.overview</span>
+      </ng-template>
+      <div class="overview-wrapper tab-content-wrapper">
+        <div class="main-column">
+          <div class="row">
+            <mat-card class="card-disabled">
+              <i class="fas fa-chart-bar"></i>
+              <span
+                    translate="translate">project.detail.stats.placeholder</span>
+            </mat-card>
+          </div>
+          <div class="row">
+            <mat-card class="document-card">
+              <div class="thumbs-wrapper pdf-light-back">
+                <img [src]="project.pagesPng[0]">
+                <img *ngIf="project.pagesPng.length > 1"
+                     [src]="project.pagesPng[1]"
+                     class="second-page">
+              </div>
+              <div class="document-wrapper">
+                <mat-list>
+                  <mat-list-item>
+                    <div mat-line="mat-line"
+                         translate="translate">project.detail.document.name
+                    </div>
+                    <div mat-line="mat-line">{{project.files.upload_1.filename}}
+                    </div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div mat-line="mat-line"
+                         translate="translate">project.detail.document.size
+                    </div>
+                    <div mat-line="mat-line">
+                      {{project.files.upload_1.filesize | filesize}}</div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div mat-line="mat-line"
+                         translate="translate">project.detail.document.format
+                    </div>
+                    <div mat-line="mat-line">{{project.files.upload_1.mimetype}}
+                    </div>
+                  </mat-list-item>
+                </mat-list>
+                <div>
+                  <button mat-raised-button="mat-raised-button"
+                          (click)="selectedTabIndex=1"
+                          class="default-back ml-4">
+                    <span *ngIf="project.pagesPng.length == 1"
+                          translate="translate">project.detail.document.page</span>
+                    <span *ngIf="project.pagesPng.length != 1"
+                          translate="translate"
+                          [translateParams]="{count: project.pagesPng.length}">project.detail.document.pages</span>
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card class="editor-card pdf-back">
+              <div>
+                <div class="card-title"
+                     translate="translate">project.detail.editor.title</div>
+                <div class="card-body"
+                     translate="translate">project.detail.editor.description
+                </div>
+              </div>
+              <div>
+                <a mat-raised-button="mat-raised-button"
+                   [href]="project.editorUrl"
+                   target="_blank"
+                   class="default-back">
+                  <span translate="translate">project.detail.editor.open</span>
+                  <i class="far fa-cube"></i>
+                </a>
+              </div>
+            </mat-card>
+          </div>
+          <div class="row">
+            <mat-card>
+              <div class="card-title">
+                <span translate="translate">project.detail.test.title</span>
+                <i class="far fa-info-circle"
+                   [matTooltip]="'project.tmpTooltip' | translate"></i>
+              </div>
+              <div class="row">
+                <mat-card class="flex-shrink-0">
+                  <div class="card-title"
+                       translate="translate">project.detail.test.mobile</div>
+                  <img class="qrcode"
+                       src="assets/qrcode.svg">
+                </mat-card>
+                <mat-card>
+                  <div class="card-title"
+                       translate="translate">project.detail.test.desktop.title
+                  </div>
+                  <p translate="translate">
+                    project.detail.test.desktop.description</p>
+                  <a mat-raised-button="mat-raised-button"
+                     [href]="project.pdfzs_url"
+                     target="_blank"
+                     class="pdf-back">
+                    <span
+                          translate="translate">project.detail.test.desktop.open</span>
+                  </a>
+                </mat-card>
+              </div>
+            </mat-card>
+          </div>
+          <div class="row">
+            <mat-card>
+              <div class="card-title"
+                   translate="translate">
+                project.detail.notes.title
+              </div>
+              <mat-form-field appearance="outline">
+                <textarea matInput="matInput"
+                          [placeholder]="'project.detail.notes.placeholder' | translate"></textarea>
+              </mat-form-field>
+              <button mat-raised-button="mat-raised-button"
+                      class="default-back">
+                <span translate="translate">project.detail.notes.open</span>
+              </button>
+            </mat-card>
+          </div>
+        </div>
+        <div class="settings-column">
+          <mat-card>
+            <div class="card-title"
+                 translate="translate">project.detail.settings.title</div>
+            <mat-divider></mat-divider>
+            <div class="card-body">
+              <div class="settings-row">
+                <label
+                       translate="translate">project.detail.settings.type</label>
+                <div>
+                  <i class="fas fa-file-pdf project-type pdf-font"></i>
+                  <span translate="translate">project.augmentedPDF</span>
+                </div>
+              </div>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.public</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <mat-form-field appearance="outline">
+                  <mat-label translate="translate">
+                    project.detail.settings.tags.label</mat-label>
+                  <mat-chip-list #tagList="#tagList">
+                    <mat-chip *ngFor="let tag of tags"
+                              [selectable]="true"
+                              [removable]="true"
+                              (removed)="removeTag(tag)">
+                      {{tag}}
+                      <i matChipRemove="matChipRemove"
+                         class="fas fa-times"></i>
+                    </mat-chip>
+                    <input [placeholder]="'project.detail.settings.tags.placeholder' | translate"
+                           #tagInput="#tagInput"
+                           [formControl]="tagCtrl"
+                           [matAutocomplete]="autoTag"
+                           [matChipInputFor]="tagList"
+                           hipInputTokenEnd)="addTag($event)">
+                  </mat-chip-list>
+                  <mat-autocomplete #autoTag="matAutocomplete"
+                                    (optionSelected)="selectTag($event)">
+                    <mat-option *ngFor="let tag of filteredTags | async"
+                                [value]="tag">
+                      {{tag}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <mat-form-field appearance="outline"
+                                class="width-auto"
+                                (click)="startDatePicker.open()">
+                  <mat-label translate="translate">
+                    project.detail.settings.dates.start</mat-label>
+                  <input matInput="matInput"
+                         [matDatepicker]="startDatePicker"
+                         [(ngModel)]="project.config.global.startDateTime"
+                         class="date-input">
+                  <mat-datepicker-toggle matSuffix="matSuffix"
+                                         [for]="startDatePicker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #startDatePicker="#startDatePicker">
+                  </mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline"
+                                class="width-auto"
+                                (click)="endDatePicker.open()">
+                  <mat-label translate="translate">
+                    project.detail.settings.dates.end</mat-label>
+                  <input matInput="matInput"
+                         [matDatepicker]="endDatePicker"
+                         [(ngModel)]="project.config.global.endDateTime"
+                         class="date-input">
+                  <mat-datepicker-toggle matSuffix="matSuffix"
+                                         [for]="endDatePicker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #endDatePicker="#endDatePicker"
+                                  disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <mat-form-field appearance="outline"
+                                class="width-auto">
+                  <mat-label translate="translate">
+                    project.detail.settings.distribution.label</mat-label>
+                  <mat-select [formControl]="distributionTypeCtrl">
+                    <mat-option value="share">
+                      <span
+                            translate="translate">project.detail.settings.distribution.share</span>
+                    </mat-option>
+                    <mat-option value="mailmerge">Mailmerge</mat-option>
+                  </mat-select>
+                  <mat-hint translate="translate">
+                    project.detail.settings.distribution.hint</mat-hint>
+                </mat-form-field>
+                <mat-form-field *ngIf="distributionTypeCtrl.value == 'mailmerge'"
+                                appearance="outline"
+                                class="width-auto">
+                  <mat-label translate="translate">
+                    project.detail.settings.distribution.service.label
+                  </mat-label>
+                  <mat-select [formControl]="distributionCtrl">
+                    <mat-option [value]="10">Email Service</mat-option>
+                    <mat-option [value]="11">Mailchimp</mat-option>
+                    <mat-option [value]="12">Salesloft</mat-option>
+                    <mat-option [value]="13">Outreach</mat-option>
+                    <mat-option [value]="14">PersistlQ</mat-option>
+                    <mat-option [value]="15">Yesware</mat-option>
+                    <mat-option [value]="16">Toutapp</mat-option>
+                    <mat-option [value]="17">Pardot</mat-option>
+                    <mat-option [value]="18">Marketo</mat-option>
+                    <mat-option [value]="19">Hubspot</mat-option>
+                    <mat-option [value]="20">Groove</mat-option>
+                    <mat-option [value]="21">Apollo</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.downloadable</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+                <mat-slide-toggle [(ngModel)]="project.config.isDownloadable">
+                </mat-slide-toggle>
+              </div>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.printable</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+                <mat-slide-toggle [(ngModel)]="project.config.isPrintable">
+                </mat-slide-toggle>
+              </div>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.emailRequired</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+                <mat-slide-toggle [(ngModel)]="project.config.isEmailRequired">
+                </mat-slide-toggle>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <label
+                       translate="translate">project.detail.settings.displayAugmentation.label</label>
+              </div>
+              <div class="settings-row">
+                <mat-radio-group
+                                 [(ngModel)]="project.config.assetsShownOnStartup">
+                  <mat-radio-button [value]="true">
+                    <span
+                          translate="translate">project.detail.settings.displayAugmentation.onStartup</span>
+                  </mat-radio-button>
+                  <mat-radio-button [value]="false">
+                    <span
+                          translate="translate">project.detail.settings.displayAugmentation.onDemand</span>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.passwordProtection</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+                <mat-slide-toggle [(ngModel)]="project.config.isPwdProtected">
+                </mat-slide-toggle>
+              </div>
+              <div *ngIf="project.config.isPwdProtected"
+                   class="settings-row">
+                <mat-form-field appearance="outline">
+                  <input matInput="matInput"
+                         type="password">
+                </mat-form-field>
+              </div>
+              <mat-divider [inset]="true"></mat-divider>
+              <div class="settings-row">
+                <label>
+                  <span
+                        translate="translate">project.detail.settings.googleAnalytics</span>
+                  <i class="far fa-info-circle"
+                     [matTooltip]="'project.tmpTooltip' | translate"></i>
+                </label>
+              </div>
+              <div class="settings-row">
+                <mat-form-field appearance="outline">
+                  <input matInput="matInput"
+                         type="text"
+                         [(ngModel)]="project.config.global.googleAnalytic">
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label="mat-tab-label">
+        <i class="far fa-file-image"></i>
+        <span translate="translate">project.detail.tabs.pages</span>
+      </ng-template>
+      <div class="tab-content-wrapper">
+        <mat-grid-list [cols]="gridRowSize"
+                       rowHeight="13.5rem"
+                       gutterSize="2rem"
+                       (window:resize)="onResize()">
+          <mat-grid-tile
+                         *ngFor="let pagePng of project.pagesPng; let index = index;">
+            <div class="grid-tile-content">
+              <div class="grid-tile-header">
+                <img [src]="pagePng">
+              </div>
+              <div class="grid-tile-footer">
+                <div class="grid-tile-title">Page
+                  {{index + 1}}</div>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
